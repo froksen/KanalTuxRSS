@@ -1,0 +1,21 @@
+[Desktop Entry]
+Name=KanalTuxRSS
+Comment=Et forsøg på at lave en simpel RSS læser til KanalTUX
+Icon=logo.png
+ 
+X-Plasma-API=declarativeappletscript
+X-Plasma-MainScript=ui/main.qml
+X-Plasma-DefaultSize=290,333
+ 
+X-KDE-PluginInfo-Author=Ole Holm Frandsen
+X-KDE-PluginInfo-Email=froksen@gmail.com
+X-KDE-PluginInfo-Website=http://www.kanaltux.dk/
+X-KDE-PluginInfo-Category=Utils
+X-KDE-PluginInfo-Name=dk.kanaltux.kanaltuxrss
+X-KDE-PluginInfo-Version=0.2
+ 
+X-KDE-PluginInfo-Depends=
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-EnabledByDefault=true
+X-KDE-ServiceTypes=Plasma/Applet
+Type=Service
