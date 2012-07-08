@@ -3,7 +3,6 @@ import QtQuick 1.1
 import Qt 4.7
 import "mediaplayer"
 import "delegate"
-import "utils"
 
 
 Rectangle {
