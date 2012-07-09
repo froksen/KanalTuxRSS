@@ -64,6 +64,7 @@ Rectangle {
        height: feedModel.progress == 0 ? parent.height : 0
        color: "red"
 
+       //Timeren bliver brugt til at tjekke om der er forbindelse til internettet. Hvis ikke er feedModel.progress == 0, eller ==1.
        Timer {
            interval: 5000; running: true; repeat: feedModel.progress == 0 ? true : false
            onTriggered: {
@@ -72,6 +73,7 @@ Rectangle {
            }
            }
 
+       //Viser denne tekst hvis der ikke er forbindelse.
        Text {
            id: rssFeedNotDownloadButtonText
            anchors.fill: parent
@@ -102,12 +104,12 @@ Rectangle {
 
 
 
+    //Menuen der indeholder de forskellige episoder.
     ListView {
         id: listviewMenu
         parent: bodyMenu
         height: parent.height
         width: currentTitle == "" ? parent.width - menuHidebutton.width*2 : parent.width - menuHidebutton.width
-        //width: bodyMenu.width == menuHidebutton.width ? 0 : parent.width - menuHidebutton.width
         model: feedModel
         delegate: EpisodeDelegate{}
         clip: true
@@ -115,6 +117,7 @@ Rectangle {
 
     }
 
+    //Menu-gem-knappen. Den knap der vises når menuen er gemt
     Rectangle {
         clip: true
         id: menuHidebutton
@@ -135,11 +138,9 @@ Rectangle {
                 if(!currentTitle == ""){
                     if(bodyMenu.width == menuHidebutton.width) {
                     bodyMenu.width = mainwindow.width
-                    //bodyContent.width = 0
                     }
                     else {
                         bodyMenu.width = menuHidebutton.width
-                        //bodyContent.width = mainwindow.width
                     }
                  }
             }
@@ -147,6 +148,7 @@ Rectangle {
     }
 
     /* BODY Page*/
+    //Flickable delen går at "siden" kan bladres igennem.
     Flickable {
         id: bodyContentFlickable
         parent: bodyContent
@@ -156,11 +158,12 @@ Rectangle {
         boundsBehavior: Flickable.DragAndOvershootBounds
         onContentYChanged: { contentY < 0 ? contentY = 0 : contentY = contentY;}
 
+        //Selve siden
         Rectangle {
             id: bodyContentRect
             height: parent.height
             width: parent.width
-
+            //titlen
             Text {
                 id: bodyContentTitle
                 text: currentTitle
@@ -171,7 +174,7 @@ Rectangle {
                 width: parent.width
 
             }
-
+            //URL'en til siden
             Text {
                 id: bodyContentPageurl
                 width: parent.width
@@ -184,6 +187,7 @@ Rectangle {
 
 
             }
+            //"Afspil" knappen
             Text {
                 id: bodyContentMedia
                 width: parent.width
@@ -212,6 +216,7 @@ Rectangle {
                         }
                     }
             }
+            //Selve beskrivelsen
             Text {
                 id: bodyContentDescription
                 width: parent.width
@@ -235,7 +240,7 @@ Rectangle {
         height: 100
         width: mainwindow.width
         color: "black"
-
+        //Banneren
         Image {
             id: headerImg
             height: headerRect.height
@@ -243,6 +248,7 @@ Rectangle {
             clip: true
             source: "ktuxlogoslim.png"
         }
+        //Hjemmesidelink
         Text {
             id: headerHomepage
             width: parent.width
@@ -251,6 +257,7 @@ Rectangle {
             horizontalAlignment: Text.AlignRight
             onLinkActivated: Qt.openUrlExternally("http://www.kanaltux.dk")
         }
+        //E-mail link
         Text {
             width: parent.width
             color: "white"
@@ -294,7 +301,7 @@ Rectangle {
 
 
 
-    /*XML*/
+    /*XML - Her bliver selve RSS/XML delen læst*/
     XmlListModel{
         id: feedModel
         source: {"http://feeds.feedburner.com/Kanaltuxmp3?format=xml"}
