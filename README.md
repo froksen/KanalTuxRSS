@@ -6,8 +6,13 @@ KanalTuxRSS
 ### Installation
 Den måde du kan installere plasmoid'en på pt. er ved at gøre følgende:
 
-  command($ plasmapkg --install /sti/til/KanalTuxRSS/src)
+  $ plasmapkg --install /sti/til/KanalTuxRSS/src
 
 ### Afinstallation 
 
-  command($ plasmapkg --remove KanalTuxRSS)
+  $ plasmapkg --remove KanalTuxRSS
+
+### Udvikle
+Naturligvis kan QML filerne redigeres via et simpelt tekstredigeringsprogram. Dog er der også muligheden for at bruge Qt Creator til dette.
+Du kan åbne *.pro filen i mappen "KanalTuxRSSViewer" i Qt Creator. Dog bare fordi det virker heri, er det ingen garanti
+for at det virker i plasma - så det skal man lige være OBS på. 
