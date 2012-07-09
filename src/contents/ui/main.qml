@@ -310,3 +310,5 @@ Rectangle {
         XmlRole { name: "itunessummary"; query: "itunes:summary/string()" }
         XmlRole { name: "itunesduration"; query: "itunes:duration/string()" }
     }
+
+}
