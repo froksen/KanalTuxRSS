@@ -16,76 +16,47 @@ Rectangle {
     property string currentTitle: ""
     property string currentMediaurl: "MediaURL"
     property string currentPageurl: "CurrentPageurl"
-    property string currentMediafile: currentMediaurl //"/home/froksen/Downloads/unreal_dm_-_Falling.mp3"
+    property string currentMediafile: currentMediaurl
     property bool bodyMenuhidden: false
 
 
-    /*Loaders*/
+    /*Loaders - bliver brugt til at "indlæse" lydafspilleren*/
     Loader {
         id: audioPlayerLoader;
     }
 
-    /* MAIN - This is the mainRow that devides the mainwindow into two rows */
-    Column {
-        id: mainRow
-        width: mainwindow.width
-        height: mainwindow.height
+    /* SECTION: BODY - Alt vedr. BODY delen */
 
-
-        Rectangle {
-            id: mainHeaderrect;
-            width: mainRow.width
-            color: "transparent"
-            clip: true
-            //height: 200
-        }
-      Rectangle {
-            id: mainBodyrect;
-            //width: mainRow.width
-            //anchors.fill: parent
-            //clip: true
-            color: "transparent"
-            //anchors.fill: parent
-            //height: mainRow.height-mainHeaderrect.height
-        }
-   }
-
-
-
-
-    /* SECTION: BODY - Everything to do with the BODY */
-
-    /* BODY layout - Creates the body layout */
+    /* BODY layout - Laver det egentlige layout, som bruges senere. Vær OBS på at "en række" altså "ROW" er det vi nok for det meste på dansk kalder
+        for en kolonne. Af en eller anden grund er der umiddelbart byttet om på de to betegnelser.*/
     Row {
-        //parent: mainBodyrect
         id: bodyRow
         parent: mainwindow
         width: parent.width
-        height: parent.height
-        anchors.top: mainHeaderrectangle.bottom
+        height: parent.height - headerRect.height
+        anchors.top: headerRect.bottom
 
-
+        //Selve menuen.
         Rectangle {
             id: bodyMenu
             //lagt 20 til bredden da det fixer problemet med at menuen bliver forkort.
             width: parent.width + 20
             height: parent.height
-            color:  "transparent" //"#efefef"
+            color:  "transparent"
             clip: true
         }
 
+        //Indeholder det egentlige indhold. Altså titler, beskrivelser osv.
         Rectangle {
+            parent: bodyRow
             clip: true
             id: bodyContent
             height: parent.height
-            //anchors.fill: parent.width
-            width:  mainHeaderrect.width - bodyMenu.width
-           // color: "blue"
+            width: parent.width
         }
     }
 
-    /* BODY Menu*/
-
+    /* BODY Menu - alt vedr. selve menuen*/
     Rectangle {
        id: rssFeedNotDownloadButton
        parent:  mainwindow
@@ -108,7 +79,6 @@ Rectangle {
            verticalAlignment: Text.AlignBottom
            horizontalAlignment: Text.AlignHCenter
            color: "white"
-           //font.weight: Font.DemiBold
            font.pointSize: 12
            wrapMode: Text.WordWrap
        }
@@ -178,148 +148,99 @@ Rectangle {
 
     /* BODY Page*/
     Flickable {
+        id: bodyContentFlickable
         parent: bodyContent
-        id: bodyPageflickable
-        width: parent.width; height: bodyMenu.height
-        //contentWidth: bodyContentDescription.width
-        //contentHeight: bodyContentDescription.height
-        contentHeight: mainBodyrect.height
-        contentWidth: bodyPageflickable.width
-        //anchors.fill: parent
-        flickDeceleration: Flickable.VerticalFlick
-        clip: true
+        width: parent.width;
+        height: parent.height
+        contentWidth: parent.width; contentHeight: bodyContentRect.height
+        boundsBehavior: Flickable.DragAndOvershootBounds
+        onContentYChanged: { contentY < 0 ? contentY = 0 : contentY = contentY;}
 
-        onContentYChanged: {
-            if(contentY< bodyContentDescription.height-100){
-                contentY = contentY
-                if(contentY<0)
-                {
-                   contentY = 0
-                }
+        Rectangle {
+            id: bodyContentRect
+            height: parent.height
+            width: parent.width
+
+            Text {
+                id: bodyContentTitle
+                text: currentTitle
+                font.family: "Helvetica"
+                font.pointSize: 24
+                wrapMode: Text.WordWrap
+                horizontalAlignment: Text.AlignHCenter
+                width: parent.width
 
             }
-         }
+
+            Text {
+                id: bodyContentPageurl
+                width: parent.width
+                text: "<a href=\http://sidensurl.dk><b>Artiklens side</b></a> "
+                onLinkActivated: Qt.openUrlExternally(currentPageurl)
+                font.family: "Helvetica"
+                wrapMode: Text.WordWrap
+                horizontalAlignment: Text.AlignLeft
+                anchors.top: bodyContentTitle.bottom
 
 
-    Rectangle {
-        height:parent.height
-        width: parent.width -20
-        //color: "blue"
-        id: bodyTextRectangle
-
-
-
-        Text {
-            id: bodyContentTitle
-            width: parent.width
-            text: currentTitle
-            font.family: "Helvetica"
-            font.pointSize: 24
-            wrapMode: Text.WordWrap
-            horizontalAlignment: Text.AlignHCenter
-        }
-        Text {
-            id: bodyContentPageurl
-            width: parent.width
-            text: "<a href=\http://sidensurl.dk><b>Artiklens side</b></a> "
-            onLinkActivated: Qt.openUrlExternally(currentPageurl)
-            font.family: "Helvetica"
-            wrapMode: Text.WordWrap
-            horizontalAlignment: Text.AlignLeft
-            anchors.top: bodyContentTitle.bottom
-        }
-        Text {
-            id: bodyContentDownloadButton
-            width: parent.width
-            //text: "DOWNLOAD"
-            anchors.top: bodyContentMedia.bottom
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    //Sætter adressen til mediet
-                    fileDownloader.setDownloadurl = currentMediaurl;
-
-                    //Tjekker om filen findes
-                    fileDownloader.checkfile
-
-                    //Sætter downloadningen igang
-                    fileDownloader.downloadFile();
-                }
             }
-        }
+            Text {
+                id: bodyContentMedia
+                width: parent.width
+                text: "<a href=\http://sidensurl.dk><b>Afspil</b></a> "
+                onLinkActivated: Qt.openUrlExternally(currentPageurl)
+                font.family: "Helvetica"
+                wrapMode: Text.WordWrap
+                horizontalAlignment: Text.AlignLeft
+                anchors.top: bodyContentPageurl.bottom
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            audioPlayerLoader.source = "mediaplayer/audioPlayer.qml";
+                            audioPlayerLoader.item.setMediasource(currentMediafile);
 
-        Text {
-            id: bodyContentMedia
-            width: parent.width
-            //MIDLERTIDIGT!
-            text: "<a href=\http://sidensurl.dk><b>Afspil</b></a> "
-            //MIDLERTIDIGT!
-            onLinkActivated: Qt.openUrlExternally(currentPageurl)
-            font.family: "Helvetica"
-            wrapMode: Text.WordWrap
-            horizontalAlignment: Text.AlignLeft
-            anchors.top: bodyContentPageurl.bottom
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        audioPlayerLoader.source = "mediaplayer/audioPlayer.qml";
-                        audioPlayerLoader.item.setMediasource(currentMediafile);
-
-                        if(!audioPlayerLoader.item.isPlaying() == true)
-                        {
-                            audioPlayerLoader.item.playAudio();
-                           // parent.text = "<a href=\http://sidensurl.dk><b>Pause</b></a> "
+                            if(!audioPlayerLoader.item.isPlaying() == true)
+                            {
+                                audioPlayerLoader.item.playAudio();
+                            }
+                            else if(audioPlayerLoader.item.isPaused() == true){
+                                audioPlayerLoader.item.playAudio();
+                            }
+                            else {
+                                audioPlayerLoader.item.pauseAudio();
+                            }
                         }
-                        else if(audioPlayerLoader.item.isPaused() == true){
-                            audioPlayerLoader.item.playAudio();
-                         //   parent.text = "<a href=\http://sidensurl.dk><b>Pause</b></a> "
-                        }
-                        else {
-                            audioPlayerLoader.item.pauseAudio();
-    //                        parent.text = "<a href=\http://sidensurl.dk><b>Genoptag afspiling</b></a> "
-                        }
-                        //audioPlayerLoader.item.playAudio();
-
                     }
-                }
-        }
-        Text {
-            id: bodyContentDescription
-            width: headerImg.width - 20
-            //height:
-            text: currentDescription
-            font.family: "Helvetica"
-            wrapMode: Text.WordWrap
-            horizontalAlignment: Text.AlignLeft
-            anchors.topMargin: 20
-            anchors.top: bodyContentMedia.bottom
-            MouseArea {
-                anchors.fill: parent
-                onPressed: bodyMenu.width = menuHidebutton.width
+            }
+            Text {
+                id: bodyContentDescription
+                width: parent.width
+                height: parent.height
+                text: currentDescription
+                font.family: "Helvetica"
+                wrapMode: Text.WordWrap
+                horizontalAlignment: Text.AlignLeft
+                anchors.topMargin: 20
+                anchors.top: bodyContentMedia.bottom
+
             }
 
         }
-        MouseArea {
-            anchors.fill: parent
-            onPressed: bodyMenu.width = menuHidebutton.width
-        }
-    }
 }
 
-    /* SECTION: HEADER - Everything to do with the header */
+    /* SECTION: HEADER - Toppen af hovedvinduet, som indeholder banneret m.m. */
     Rectangle {
         parent: mainwindow
-        id: mainHeaderrectangle
-        //parent: mainHeaderrect
+        id: headerRect
         height: 100
-        width: mainwindow.width // + menuHidebutton.width
+        width: mainwindow.width
         color: "black"
 
         Image {
             id: headerImg
-            anchors.fill: parent
+            height: headerRect.height
+            width: parent.width
             clip: true
-            //height: parent.height-10
             source: "ktuxlogoslim.png"
         }
         Text {
@@ -386,20 +307,6 @@ Rectangle {
         XmlRole { name: "description"; query: "description/string()" }
         XmlRole { name: "link"; query: "link/string()" }
         XmlRole { name: "media"; query: "media:content/@url/string()" }
-        //XmlRole { name: "media"; query: "media:link/@url/string()" }
         XmlRole { name: "itunessummary"; query: "itunes:summary/string()" }
         XmlRole { name: "itunesduration"; query: "itunes:duration/string()" }
     }
-
-
-    //SLET
-//    MouseArea {
-//        anchors.fill: parent
-//        onClicked: {
-
-//            audioPlayerLoader.source = "mediaplayer/audioPlayer.qml";
-//            audioPlayerLoader.item.setMediasource("/home/froksen/.kanaltux/KanaltuxPodcastS01E07.mp3");
-//            audioPlayerLoader.item.playAudio();
-//        }
-//    }
-}
