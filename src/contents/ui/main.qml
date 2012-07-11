@@ -50,7 +50,7 @@ Rectangle {
             clip: true
             id: bodyContent
             height: parent.height
-            width: parent.width
+            width: bodyMenu.height == 0 ? parent.width : 0
         }
     }
 
@@ -245,11 +245,11 @@ Rectangle {
             anchors.bottom: parent.bottom
 
 
-            Text {id: menuHidebottomtext ; anchors.fill: parent; font.weight: Font.DemiBold ; verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter ; text: bodyMenu.height == 0 ? "ÅBEN MENU" : "LUK MENU"; color: bodyMenu.width == menuHidebutton.width ? "white" : "black"}
+            Text {id: menuHidebottomtext ; anchors.fill: parent; font.weight: Font.DemiBold ; verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter ; text: bodyMenu.height == 0 ? "ÅBEN MENU" : "LUK MENU"; color:  bodyMenu.height == 0 ? "white" : "black"}
 
             MouseArea {
                 anchors.fill: parent
-                onPressed: bodyMenu.height == 0 ? bodyMenu.height = mainwindow.height : bodyMenu.height = 0
+                onPressed: bodyMenu.height == 0 ? bodyMenu.height = bodyRow.height : bodyRow.height = 0
             }
         }
 
