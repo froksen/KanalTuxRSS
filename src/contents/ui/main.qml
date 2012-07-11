@@ -245,7 +245,7 @@ Rectangle {
             anchors.bottom: parent.bottom
 
 
-            Text {id: menuHidebottomtext ; anchors.fill: parent; font.weight: Font.DemiBold ; verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter ; text: bodyMenu.height == 0 ? "ÅBEN MENU" : "LUK MENU"; color:  bodyMenu.height == 0 ? "white" : "black"}
+            Text {id: menuHidebottomtext ; anchors.fill: parent; font.weight: Font.DemiBold ; verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter ; text: bodyMenu.height == 0 ? " ↓ MENU ↓" : "↑ MENU ↑"; color:  bodyMenu.height == 0 ? "white" : "black"}
 
             MouseArea {
                 anchors.fill: parent
