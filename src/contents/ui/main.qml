@@ -205,13 +205,13 @@ Rectangle {
     Rectangle {
         parent: mainwindow
         id: headerRect
-        height: 120
+        height: 130
         width: mainwindow.width
         color: "black"
         //Banneren
         Image {
             id: headerImg
-            height: headerRect.height
+            height: headerRect.height - menuHidebutton.height
             width: parent.width
             clip: true
             source: "ktuxlogoslim.png"
@@ -249,7 +249,7 @@ Rectangle {
 
             MouseArea {
                 anchors.fill: parent
-                onPressed: bodyMenu.height == 0 ? bodyMenu.height = bodyRow.height : bodyRow.height = 0
+                onPressed: bodyMenu.height == 0 ? bodyMenu.height = bodyRow.height : bodyMenu.height = 0
             }
         }
 
@@ -258,8 +258,8 @@ Rectangle {
     /* SECTION: SLIDER - Everything to do with the header */
     Slider {
         id: sliderobject
-        parent: mainHeaderrectangle
-        width: mainHeaderrectangle.width
+        parent: headerRect
+        width: parent.width
         height: audioPlayerLoader.item.isPlaying() == true ? 10 : 0
         anchors.bottom: menuHidebutton.top
         currentProgress: 50
