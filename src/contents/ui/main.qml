@@ -123,8 +123,10 @@ Rectangle {
         width: parent.width;
         height: parent.height
         contentWidth: parent.width; contentHeight: bodyContentRect.height
-        boundsBehavior: Flickable.DragAndOvershootBounds
-        onContentYChanged: { contentY < 0 ? contentY = 0 : contentY = contentY;}
+        //boundsBehavior: Flickable.StopAtBounds
+        onContentYChanged: {
+            contentY < 0 ? contentY = 0 : contentY = contentY;
+        }
 
         //Selve siden
         Rectangle {

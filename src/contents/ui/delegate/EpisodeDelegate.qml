@@ -47,6 +47,9 @@ Item {
             //listtitlemousearea_clicked = true
             listtitlemousearea_clicked = false
 
+            //Sender brugeren til toppen af teksten
+            bodyContentFlickable.contentY = 0
+
         }
 
     }
