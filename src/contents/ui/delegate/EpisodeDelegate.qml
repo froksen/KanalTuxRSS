@@ -41,8 +41,8 @@ Item {
             mainwindow.currentMediaurl = media
             mainwindow.currentPageurl = link
 
-            bodyMenu.width = menuHidebutton.width
-            //bodyContent.width = mainHeaderrect.width - bodyMenu.width
+            //Gemmer menuen væk når Afsnittet er blevet trykket på.
+            bodyMenu.height = 0
 
             listtitlemousearea_clicked = true
             listtitlemousearea_clicked = false
@@ -51,28 +51,29 @@ Item {
 
     }
 
-    states: [
-        State {
-        name: "down";  when: listtitlemousearea_clicked == false
-        //PropertyChanges { target: descriptiontext; y: 160; rotation: 180; color: "red" }
-        PropertyChanges { target: bodyMenu; y: 0; x: 0; }
-          },
-        State {
-        name: "up"; when: listtitlemousearea_clicked == true
-        //PropertyChanges { target: descriptiontext; y: 160; rotation: 180; color: "red" }
-        PropertyChanges { target: bodyMenu; y: 0; x: menuHidebutton.width;  }
+//    //Animationen når der er blevet trykket på et element
+//    states: [
+//        State {
+//        name: "down";  when: listtitlemousearea_clicked == false
+//        //PropertyChanges { target: descriptiontext; y: 160; rotation: 180; color: "red" }
+//        PropertyChanges { target: bodyMenu; y: 0; x: 0; height: 0 }
+//          },
+//        State {
+//        name: "up"; when: listtitlemousearea_clicked == true
+//        //PropertyChanges { target: descriptiontext; y: 160; rotation: 180; color: "red" }
+//        PropertyChanges { target: bodyMenu; y: 0; x: 0; height: bodyMenu.height;  }
 
-        }
+//        }
 
-      ]
+//      ]
 
-    transitions: [
-        Transition {
-        from: "up"; to: "down"; reversible: false
-            ParallelAnimation {
-                NumberAnimation { properties: "x,y,width"; duration: 500; easing.type: Easing.InOutQuad }
-                ColorAnimation { duration: 500 }
-            }
-        }
-    ]
+//    transitions: [
+//        Transition {
+//        from: "up"; to: "down"; reversible: false
+//            ParallelAnimation {
+//                NumberAnimation { properties: "x,y,width, height"; duration: 500; easing.type: Easing.InOutQuad }
+//                ColorAnimation { duration: 500 }
+//            }
+//        }
+//    ]
 }

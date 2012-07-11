@@ -39,8 +39,7 @@ Rectangle {
         //Selve menuen.
         Rectangle {
             id: bodyMenu
-            //lagt 20 til bredden da det fixer problemet med at menuen bliver forkort.
-            width: parent.width + 20
+            width: parent.width
             height: parent.height
             color:  "transparent"
             clip: true
@@ -48,7 +47,6 @@ Rectangle {
 
         //Indeholder det egentlige indhold. Altså titler, beskrivelser osv.
         Rectangle {
-            parent: bodyRow
             clip: true
             id: bodyContent
             height: parent.height
@@ -109,43 +107,13 @@ Rectangle {
         id: listviewMenu
         parent: bodyMenu
         height: parent.height
-        width: currentTitle == "" ? parent.width - menuHidebutton.width*2 : parent.width - menuHidebutton.width
+        width: parent.width
         model: feedModel
         delegate: EpisodeDelegate{}
         clip: true
         anchors.left: bodyMenuscrollbar.left
-
     }
 
-    //Menu-gem-knappen. Den knap der vises når menuen er gemt
-    Rectangle {
-        clip: true
-        id: menuHidebutton
-        parent: bodyMenu
-        height: parent.height
-        width: 20
-        color: bodyMenu.width == menuHidebutton.width ? "steelblue" : "#efefef"
-        anchors.left: listviewMenu.right;
-
-
-        Text {id: menuHidebottomtext; anchors.fill: parent; font.weight: Font.DemiBold ; verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter ; text: bodyMenu.width == menuHidebutton.width ? "<\nM\nE\nN\nU\n<" : ">\nL\nU\nK\n>"; color: bodyMenu.width == menuHidebutton.width ? "white" : "black"}
-//        Text {anchors.fill: parent ; verticalAlignment: Text.AlignVCenter; font.weight: Font.DemiBold ; text: menuHidebottomtext.text ; horizontalAlignment: Text.AlignHCenter; color: menuHidebottomtext.color }
-//        Text {anchors.fill: parent ; verticalAlignment: Text.AlignBottom; font.weight: Font.DemiBold ; text: menuHidebottomtext.text ; horizontalAlignment: Text.AlignHCenter; color: menuHidebottomtext.color }
-
-        MouseArea {
-            anchors.fill: parent
-            onPressed: {
-                if(!currentTitle == ""){
-                    if(bodyMenu.width == menuHidebutton.width) {
-                    bodyMenu.width = mainwindow.width
-                    }
-                    else {
-                        bodyMenu.width = menuHidebutton.width
-                    }
-                 }
-            }
-        }
-    }
 
     /* BODY Page*/
     //Flickable delen går at "siden" kan bladres igennem.
@@ -237,7 +205,7 @@ Rectangle {
     Rectangle {
         parent: mainwindow
         id: headerRect
-        height: 100
+        height: 120
         width: mainwindow.width
         color: "black"
         //Banneren
@@ -266,6 +234,24 @@ Rectangle {
             horizontalAlignment: Text.AlignRight
             anchors.top: headerHomepage.bottom
         }
+        //Menu-gem-knappen. Den knap der vises når menuen er gemt
+        Rectangle {
+            clip: true
+            id: menuHidebutton
+            height: 20
+            width: parent.width
+            color: bodyMenu.height == 0 ? "steelblue" : "#efefef"
+            anchors.left: listviewMenu.right;
+            anchors.bottom: parent.bottom
+
+
+            Text {id: menuHidebottomtext ; anchors.fill: parent; font.weight: Font.DemiBold ; verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter ; text: bodyMenu.height == 0 ? "ÅBEN MENU" : "LUK MENU"; color: bodyMenu.width == menuHidebutton.width ? "white" : "black"}
+
+            MouseArea {
+                anchors.fill: parent
+                onPressed: bodyMenu.height == 0 ? bodyMenu.height = mainwindow.height : bodyMenu.height = 0
+            }
+        }
 
     }
 
@@ -275,7 +261,7 @@ Rectangle {
         parent: mainHeaderrectangle
         width: mainHeaderrectangle.width
         height: audioPlayerLoader.item.isPlaying() == true ? 10 : 0
-        anchors.bottom: parent.bottom
+        anchors.bottom: menuHidebutton.top
         currentProgress: 50
         MouseArea {
             anchors.fill: parent
