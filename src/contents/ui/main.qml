@@ -36,11 +36,19 @@ Rectangle {
         height: parent.height - headerRect.height
         anchors.top: headerRect.bottom
 
+        //Menuen der indeholder YouTube/podcast oversigten
+        Rectangle {
+            id: bodyVideoAudioMenu
+            width: parent.width
+            height: parent.height
+        }
+
         //Selve menuen.
         Rectangle {
             id: bodyMenu
             width: parent.width
-            height: parent.height
+            //height: parent.height
+            height: 0
             color:  "transparent"
             clip: true
         }
@@ -52,6 +60,24 @@ Rectangle {
             height: parent.height
             width: bodyMenu.height == 0 ? parent.width : 0
         }
+    }
+
+    /* Video lyd meuen */
+    ListView{
+        id: listviewVideoAudio
+        parent: bodyVideoAudioMenu
+        height: parent.height
+        width: parent.width
+        model: rssVideoAudioFeeds
+        delegate: VideoDelegate{}
+        clip: true
+        anchors.left: bodyMenuscrollbar.left
+    }
+
+    ListModel {
+        id: rssVideoAudioFeeds
+        ListElement { name: "Videoer"; feed: "http://gdata.youtube.com/feeds/base/users/KanalTUX/uploads?alt=rss&v=2&orderby=published&client=ytapi-youtube-profile" }
+        ListElement { name: "Podcasts"; feed: "http://feeds.feedburner.com/Kanaltuxmp3?format=xml" }
     }
 
     /* BODY Menu - alt vedr. selve menuen*/
