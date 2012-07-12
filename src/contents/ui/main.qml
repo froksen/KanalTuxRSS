@@ -275,9 +275,9 @@ Rectangle {
             clip: true
             id: menuHidebutton
             height: 20
-            width: parent.width
+            width: parent.width - videoaudioHideButton.width
             color: bodyMenu.height == 0 ? "steelblue" : "#efefef"
-            anchors.left: listviewMenu.right;
+            anchors.left:  videoaudioHideButton.right;
             anchors.bottom: parent.bottom
 
 
@@ -286,6 +286,22 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onPressed: bodyMenu.height == 0 ? bodyMenu.height = bodyRow.height : bodyMenu.height = 0
+            }
+        }
+        Rectangle {
+            id: videoaudioHideButton
+            height: 20
+            width: 100
+            anchors.bottom: parent.bottom
+            color: bodyMenu.height != 0 ? "steelblue" : "#efefef"
+            Text {anchors.fill: parent; font.weight: Font.DemiBold ; verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignHCenter ; text: bodyVideoAudioMenu.height == 0 ? " ↓ VIDEO/LYD ↓" : "↑ VIDEO/LYD ↑"; color:  bodyVideoAudioMenu.height == 0 ? "white" : "black"}
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    bodyVideoAudioMenu.height = bodyRow.height
+                    bodyMenu.height = 0
+                }
             }
         }
 

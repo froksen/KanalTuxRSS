@@ -54,7 +54,7 @@ Item {
 
 
             bodyVideoAudioMenu.height = 0
-            bodyMenu.height = mainwindow.height
+            bodyMenu.height = bodyRow.height
             feedModel.source = feed
             feedModel.reload()
 
