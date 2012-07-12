@@ -5,7 +5,7 @@ Icon=logo.png
  
 X-Plasma-API=declarativeappletscript
 X-Plasma-MainScript=ui/main.qml
-X-Plasma-DefaultSize=290,333
+X-Plasma-DefaultSize=600,400
  
 X-KDE-PluginInfo-Author=Ole Holm Frandsen
 X-KDE-PluginInfo-Email=froksen@gmail.com
