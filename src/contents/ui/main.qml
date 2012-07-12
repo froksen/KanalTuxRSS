@@ -57,8 +57,8 @@ Rectangle {
         Rectangle {
             clip: true
             id: bodyContent
-            height: parent.height
-            width: bodyMenu.height == 0 ? parent.width : 0
+            height: bodyMenu.height == 0 ? parent.height - bodyVideoAudioMenu.height : 0
+            width: parent.width
         }
     }
 
@@ -285,7 +285,10 @@ Rectangle {
 
             MouseArea {
                 anchors.fill: parent
-                onPressed: bodyMenu.height == 0 ? bodyMenu.height = bodyRow.height : bodyMenu.height = 0
+                onPressed: {
+                    bodyMenu.height == 0 ? bodyMenu.height = bodyRow.height : bodyMenu.height = 0
+                    bodyVideoAudioMenu.height = 0
+                }
             }
         }
         Rectangle {
