@@ -60,7 +60,7 @@ Rectangle {
        parent:  mainwindow
        width: feedModel.progress == 0 ? parent.width : 0
        height: feedModel.progress == 0 ? parent.height : 0
-       color: "red"
+       color: "transparent"
 
        //Timeren bliver brugt til at tjekke om der er forbindelse til internettet. Hvis ikke er feedModel.progress == 0, eller ==1.
        Timer {
@@ -86,7 +86,7 @@ Rectangle {
            text: feedModel.progress == 0 ? "<b>Ingen forbindelse</b> \n\n Forsøger hvert 5. sekund <br><br> Sidst forsøgt: " + Date().toString() + "<br> <br> - Tryk for at tvinge genopfriskning -" : ""
            verticalAlignment: Text.AlignBottom
            horizontalAlignment: Text.AlignHCenter
-           color: "white"
+           color: "red"
            font.pointSize: 12
            wrapMode: Text.WordWrap
        }
