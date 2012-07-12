@@ -170,19 +170,20 @@ Rectangle {
             //titlen
             Text {
                 id: bodyContentTitle
-                text: currentTitle
+                text: listviewVideoAudio.currentIndex == 1 ? currentTitle : ""
                 font.family: "Helvetica"
-                font.pointSize: 24
+                font.pointSize: listviewVideoAudio.currentIndex == 1 ? 24 : 0
                 wrapMode: Text.WordWrap
                 horizontalAlignment: Text.AlignHCenter
                 width: parent.width
+
 
             }
             //URL'en til siden
             Text {
                 id: bodyContentPageurl
                 width: parent.width
-                text: "<a href=\http://sidensurl.dk><b>Artiklens side</b></a> "
+                text: listviewVideoAudio.currentIndex == 1 ? "<a href=\http://sidensurl.dk><b>Artiklens side</b></a> " : ""
                 onLinkActivated: Qt.openUrlExternally(currentPageurl)
                 font.family: "Helvetica"
                 wrapMode: Text.WordWrap
@@ -195,7 +196,7 @@ Rectangle {
             Text {
                 id: bodyContentMedia
                 width: parent.width
-                text: "<a href=\http://sidensurl.dk><b>Afspil</b></a> "
+                text: listviewVideoAudio.currentIndex == 1 ? "<a href=\http://sidensurl.dk><b>Afspil</b></a> " : ""
                 onLinkActivated: Qt.openUrlExternally(currentPageurl)
                 font.family: "Helvetica"
                 wrapMode: Text.WordWrap
@@ -229,8 +230,9 @@ Rectangle {
                 font.family: "Helvetica"
                 wrapMode: Text.WordWrap
                 horizontalAlignment: Text.AlignLeft
-                anchors.topMargin: 20
+                anchors.topMargin: listviewVideoAudio.currentIndex == 1 ? 20 : 0
                 anchors.top: bodyContentMedia.bottom
+                onLinkActivated: Qt.openUrlExternally(currentPageurl)
 
             }
 

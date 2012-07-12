@@ -36,7 +36,13 @@ Item {
 
         onClicked: {
             delegate.ListView.view.currentIndex = index
-            mainwindow.currentDescription = itunessummary
+            if(itunessummary != ""){
+                mainwindow.currentDescription = itunessummary
+            }
+            else {
+                mainwindow.currentDescription = description
+            }
+
             mainwindow.currentTitle = title
             mainwindow.currentMediaurl = media
             mainwindow.currentPageurl = link
