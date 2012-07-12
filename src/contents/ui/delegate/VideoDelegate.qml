@@ -4,7 +4,7 @@ import QtQuick 1.1
 Item {
     id: delegate
     width: delegate.ListView.view.width
-    height: 50
+    height: bodyRow.height/2
 
     property bool listtitlemousearea_clicked: true
 
