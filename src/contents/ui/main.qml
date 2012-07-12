@@ -70,6 +70,14 @@ Rectangle {
                feedModel.reload()
            }
            }
+       //Denne Timer tjekker RSS feeded en gang hver time
+       Timer {
+           interval: 3600000; running: true; repeat: true
+           onTriggered: {
+               rssFeedNotDownloadButtonText.text = "<b>Ingen forbindelse</b> \n\n Forsøger hvert 5. sekund <br><br> Sidst forsøgt: " + Date().toString() + "<br> <br> - Tryk for at tvinge genopfriskning -"
+               feedModel.reload()
+           }
+           }
 
        //Viser denne tekst hvis der ikke er forbindelse.
        Text {
